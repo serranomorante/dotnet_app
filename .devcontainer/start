@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+if [ -z "${POSTGRES_USER}" ]; then
+    base_postgres_image_default_user='postgres'
+    export POSTGRES_USER="${base_postgres_image_default_user}"
+fi
+
+export DefaultConnection="Server=${POSTGRES_HOST};Database=${POSTGRES_DB};Port=5432;User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"

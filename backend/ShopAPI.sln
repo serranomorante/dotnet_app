@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopAPI", "ShopAPI\ShopAPI.csproj", "{E4CEA64B-96E6-4D01-92BF-5F06006C1C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopAPI.Tests", "ShopAPI.Tests\ShopAPI.Tests.csproj", "{6FC64FE1-D297-4CC3-974B-6CAC5AE271D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4CEA64B-96E6-4D01-92BF-5F06006C1C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CEA64B-96E6-4D01-92BF-5F06006C1C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CEA64B-96E6-4D01-92BF-5F06006C1C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CEA64B-96E6-4D01-92BF-5F06006C1C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FC64FE1-D297-4CC3-974B-6CAC5AE271D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC64FE1-D297-4CC3-974B-6CAC5AE271D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC64FE1-D297-4CC3-974B-6CAC5AE271D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC64FE1-D297-4CC3-974B-6CAC5AE271D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

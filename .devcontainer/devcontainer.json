@@ -1,0 +1,41 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.6/containers/dotnet
+{
+	"name": "C# (.NET)",
+    "dockerComposeFile": "docker-compose.dev-container.yml",
+    "service": "app",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/workspace",
+	// Make sure the required docker network and volume exist before creating containers
+	"initializeCommand": ".devcontainer/docker-init.sh",
+	"postStartCommand": ".devcontainer/start",
+	// Set *default* container specific settings.json values on container create.
+	// "settings": {
+    //     "#terminal.integrated.defaultProfile.linux#": "/bin/bash"
+    // },
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-dotnettools.csharp",
+		"formulahendry.dotnet-test-explorer",
+		"fernandoescolar.vscode-solution-explorer",
+		"shardulm94.trailing-spaces",
+		"pkief.material-icon-theme",
+		"jmrog.vscode-nuget-package-manager",
+		"patcx.vscode-nuget-gallery",
+		"k--kato.docomment",
+		"formulahendry.dotnet",
+		"2gua.rainbow-brackets",
+		"oderwat.indent-rainbow",
+		"donjayamanne.githistory",
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "dotnet restore",
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+}

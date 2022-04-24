@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.dev
+      args:
+        - VARIANT=6.0-bullseye
+        - NODE_VERSION=lts/*
+    container_name: heh_shop_app
+    init: true
+    volumes:
+      # Forwards the local Docker socket to the container.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Use a named volume for the source code
+      - heh-shop-app:/workspace
+      # Persist vscode extensions between reboots
+      - vscode-extensions:/root/.vscode-server/extensions
+    env_file:
+      - ../.envs/.local/.postgres
+    networks:
+      - heh-shop-network
+    command: sleep infinity
+
+volumes:
+  heh-shop-app:
+    external: true
+  vscode-extensions:
+
+# This external network is shared with the main docker-compose.yml config
+# Ensures that services started from inside this dev container can all communicate
+networks:
+  heh-shop-network:
+    external: true

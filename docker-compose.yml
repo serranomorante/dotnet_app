@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: heh_shop_production_postgres
+    container_name: heh_shop_local_postgres
+    volumes:
+      - heh_shop_local_postgres_data:/var/lib/postgresql/data:Z
+    networks:
+      - heh-shop-network
+    expose:
+      - "5432"
+    env_file:
+      - ./.envs/.local/.postgres
+
+  api:
+    build:
+      context: .
+      dockerfile: ./compose/local/dotnet/Dockerfile
+    image: heh_shop_local_api
+    container_name: heh_shop_local_api
+    volumes:
+      - heh-shop-app:/app
+    networks:
+      - heh-shop-network
+    depends_on:
+      - postgres
+    ports:
+      - "8000:80"
+    env_file:
+      - ./.envs/.local/.dotnet
+      - ./.envs/.local/.postgres
+    command: /start
+
+
+volumes:
+  heh-shop-api:
+  heh-shop-app:
+    external: true
+  heh_shop_local_sqlserver_data: {}
+  heh_shop_local_postgres_data: {}
+
+networks:
+  heh-shop-network:
+    external: true

@@ -1,0 +1,7 @@
+{
+    "dotnet-test-explorer.testProjectPath": "**/*.sln",
+    "vssolution.altSolutionFolders": [
+        "src",
+        "/workspace/backend"
+    ]
+}
