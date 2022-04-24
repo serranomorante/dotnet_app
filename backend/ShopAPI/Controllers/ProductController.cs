@@ -13,7 +13,7 @@ public class ProductController : ControllerBase {
     [HttpGet("/api/product")]
     public ActionResult GetProduct() {
         _logger.LogInformation("Getting all products");
-        _productService.GetAllProducts();
-        return Ok("");
+        var products = _productService.GetAllProducts();
+        return Ok(products);
     }
 }
