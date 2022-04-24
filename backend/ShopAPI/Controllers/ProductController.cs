@@ -14,6 +14,9 @@ public class ProductController : ControllerBase {
     public ActionResult GetProduct() {
         _logger.LogInformation("Getting all products");
         var products = _productService.GetAllProducts();
-        return Ok(products);
+
+        var productViewModel = products.Select(ProductMapper.SerializeProductModel);
+
+        return Ok(productViewModel);
     }
 }
