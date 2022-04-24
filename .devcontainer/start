@@ -9,4 +9,4 @@ if [ -z "${POSTGRES_USER}" ]; then
     export POSTGRES_USER="${base_postgres_image_default_user}"
 fi
 
-export DefaultConnection="Server=${POSTGRES_HOST};Database=${POSTGRES_DB};Port=5432;User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+export DefaultConnection="Host=${POSTGRES_HOST};Database=${POSTGRES_DB};Port=5432;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<MovieDataContext>(
+builder.Services.AddDbContext<ShopAPIDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
