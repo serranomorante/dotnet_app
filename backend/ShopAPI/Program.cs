@@ -36,5 +36,5 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services)
 {
-    // services.AddEntityFrameworkNpgsql().AddDbContext<>(opts => opts.UseNpgsql(Configuration.GetConnectionString))
+    services.AddTransient<IProductService, ProductService>();
 }
