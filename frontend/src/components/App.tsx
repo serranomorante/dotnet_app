@@ -8,23 +8,22 @@ import { indigo } from "@material-ui/core/colors";
 const queryClient = new QueryClient();
 
 const theme = createTheme({
-    // @ts-expect-error
-    colors: {
-        main: indigo[500],
-    },
+  // @ts-expect-error
+  colors: {
+    main: indigo[500],
+  },
 });
 
 export default function App() {
-    return (
-        <React.Fragment>
-            <CssBaseline />
-            <ThemeProvider theme={theme}>
-
-            <QueryClientProvider client={queryClient}>
-                <div></div>
-            </QueryClientProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-            </ThemeProvider>
-        </React.Fragment>
-    )
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <div></div>
+        </QueryClientProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </ThemeProvider>
+    </React.Fragment>
+  );
 }
