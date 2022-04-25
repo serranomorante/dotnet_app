@@ -35,6 +35,22 @@ services:
       - ./.envs/.local/.postgres
     command: /start
 
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/local/frontend/Dockerfile
+    image: heh_shop_local_nginx
+    container_name: heh_shop_local_nginx
+    volumes:
+      - heh-shop-app:/app
+    networks:
+      - heh-shop-network
+    # depends_on:
+    #   - api
+    ports:
+      - "1234:1234"
+    command: /start
+
 
 volumes:
   heh-shop-api:

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "clean": "rm -rf dist .cache"
   },
   "devDependencies": {
     "@types/parcel-env": "^0.0.1",
