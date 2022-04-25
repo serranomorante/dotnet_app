@@ -10,3 +10,7 @@ if [ -z "${POSTGRES_USER}" ]; then
 fi
 
 export ConnectionStrings__DefaultConnection="Host=${POSTGRES_HOST};Database=${POSTGRES_DB};Port=${POSTGRES_PORT};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+
+# Install csharp and parcel dependencies
+dotnet restore ./backend
+cd ./frontend && yarn install
