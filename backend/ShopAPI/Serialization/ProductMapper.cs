@@ -22,7 +22,7 @@ public static class ProductMapper {
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
-    public static Product DeserializeProductModel(ProductModel product) {
+    public static Product SerializeProductModel(ProductModel product) {
         return new Product {
             Id = product.Id,
             CreatedOn = product.CreatedOn,
