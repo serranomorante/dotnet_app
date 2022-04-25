@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { indigo } from "@material-ui/core/colors";
+import MiniDrawer from "./navigation/Drawer";
 
 const queryClient = new QueryClient();
 
@@ -20,9 +21,9 @@ export default function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <div></div>
+          <MiniDrawer />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
     </React.Fragment>
   );
