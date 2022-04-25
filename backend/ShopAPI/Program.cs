@@ -12,14 +12,9 @@ builder.Services.AddDbContext<ShopAPIDbContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IProductService, ProductService>();
-
-// ConfigureServices(builder.Services);
-
-// void ConfigureServices(IServiceCollection services)
-// {
-//     services.AddTransient<IProductService, ProductService>();
-// }
-
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IInventoryService, InventoryService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 
 var app = builder.Build();
 

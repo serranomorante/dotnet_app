@@ -39,7 +39,7 @@ public class InventoryService : IInventoryService {
             inventory.QuantityOnHand += adjustment;
 
             try {
-                CreateSnapshot();
+                CreateSnapshot(inventory);
             } catch (Exception e) {
                 _logger.LogError("Error creating inventory snapshot");
                 _logger.LogError(e.StackTrace);
@@ -62,16 +62,42 @@ public class InventoryService : IInventoryService {
             };
         }
     }
-    
+
+    /// <summary>
+    /// Get a ProductInventory instance by Product ID
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
     public ProductInventory GetByProductId(int productId) {
-        throw new NotImplementedException();
+        return _db.ProductInventories
+            .Include(pi => pi.Product)
+            .FirstOrDefault(pi => pi.Product.Id == productId);
     }
-    
-    public void CreateSnapshot() {
-        throw new NotImplementedException();
-    }
-    
+
+    /// <summary>
+    /// Return Snapshot history for the previous 6 hours
+    /// </summary>
+    /// <returns></returns>
     public List<ProductInventorySnapshot> GetSnapshotHistory() {
-        throw new NotImplementedException();
+        var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
+        return _db.ProductInventorySnapshots
+            .Include(snap => snap.Product)
+            .Where(snap => snap.SnapshotTime > earliest && !snap.Product.IsArchived)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Creates a Snapshot record using the provided ProductInventory instance
+    /// </summary>
+    /// <param name="inventory"></param>
+    private void CreateSnapshot(ProductInventory inventory) {
+        var now = DateTime.UtcNow;
+        var snapshot = new ProductInventorySnapshot {
+            SnapshotTime = now,
+            Product = inventory.Product,
+            QuantityOnHand = inventory.QuantityOnHand
+        };
+
+        _db.Add(snapshot);
     }
 }
