@@ -40,3 +40,5 @@ COPY  . .
 
 RUN sed -i 's/\r$//g' .devcontainer/start
 RUN chmod +x .devcontainer/start
+
+RUN ["dotnet", "restore"]

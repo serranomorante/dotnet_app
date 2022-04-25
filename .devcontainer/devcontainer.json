@@ -28,6 +28,7 @@
 		"2gua.rainbow-brackets",
 		"oderwat.indent-rainbow",
 		"donjayamanne.githistory",
+		"esbenp.prettier-vscode",
 		// react
 		"dsznajder.es7-react-js-snippets"
 	],
