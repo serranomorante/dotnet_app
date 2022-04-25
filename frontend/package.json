@@ -3,7 +3,7 @@
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel",
+    "start": "cross-env API_URL=http://localhost/api parcel",
     "build": "cross-env parcel build",
     "check": "tsc --noEmit",
     "clean": "rm -rf dist .cache"
@@ -13,7 +13,8 @@
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "cross-env": "^7.0.3",
-    "parcel": "^2.5.0"
+    "parcel": "^2.5.0",
+    "process": "^0.11.10"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",

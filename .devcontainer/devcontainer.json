@@ -19,17 +19,16 @@
 		"ms-dotnettools.csharp",
 		"formulahendry.dotnet-test-explorer",
 		"fernandoescolar.vscode-solution-explorer",
+		"shardulm94.trailing-spaces",
 		"pkief.material-icon-theme",
 		"jmrog.vscode-nuget-package-manager",
 		"patcx.vscode-nuget-gallery",
 		"k--kato.docomment",
 		"formulahendry.dotnet",
 		"2gua.rainbow-brackets",
-		"oderwat.indent-rainbow",
+		// "oderwat.indent-rainbow",
 		"donjayamanne.githistory",
 		"esbenp.prettier-vscode",
-		// react
-		"dsznajder.es7-react-js-snippets"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
