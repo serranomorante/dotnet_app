@@ -28,6 +28,8 @@
 		"2gua.rainbow-brackets",
 		"oderwat.indent-rainbow",
 		"donjayamanne.githistory",
+		// react
+		"dsznajder.es7-react-js-snippets"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
