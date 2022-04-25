@@ -18,6 +18,7 @@ public class OrderController : ControllerBase {
         _logger.LogInformation("Generating invoice");
         var order = OrderMapper.SerializerInvoiceToOrder(invoice);
         order.Customer = _customerService.GetById(invoice.CustomerId);
+        _orderService.GenerateOpenOrder(order);
         return Ok();
     }
 }

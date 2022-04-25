@@ -7,7 +7,7 @@ public class OrderService : IOrderService {
     private readonly IProductService _productService;
     private readonly IInventoryService _inventoryService;
 
-    public OrderService(ShopAPIDbContext dbContext, ILogger<OrderService> logger, IProductService productService, InventoryService inventoryService)
+    public OrderService(ShopAPIDbContext dbContext, ILogger<OrderService> logger, IProductService productService, IInventoryService inventoryService)
     {
         _db = dbContext;
         _logger = logger;

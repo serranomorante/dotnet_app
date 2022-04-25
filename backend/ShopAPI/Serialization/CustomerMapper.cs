@@ -21,23 +21,13 @@ public static class CustomerMapper {
     /// <param name="customer"></param>
     /// <returns></returns>
     public static Customer SerializeCustomer(CustomerModel customer) {
-        var address = new CustomerAddress {
-            AddressLine1 = customer.PrimaryAddress.AddressLine1,
-            AddressLine2 = customer.PrimaryAddress.AddressLine2,
-            City = customer.PrimaryAddress.City,
-            State = customer.PrimaryAddress.State,
-            PostalCode = customer.PrimaryAddress.PostalCode,
-            Country = customer.PrimaryAddress.Country,
-            CreatedOn = customer.PrimaryAddress.CreatedOn,
-            UpdatedOn = customer.PrimaryAddress.UpdatedOn,
-        };
-
         return new Customer {
+            Id = customer.Id,
             CreatedOn = customer.CreatedOn,
             UpdatedOn = customer.UpdatedOn,
             FirstName = customer.FirstName,
             LastName = customer.LastName,
-            PrimaryAddress = address
+            PrimaryAddress = MapCustomerAddress(customer.PrimaryAddress)
         };
 
     }
@@ -57,7 +47,7 @@ public static class CustomerMapper {
             Country = address.Country,
             PostalCode = address.PostalCode,
             CreatedOn = address.CreatedOn,
-            UpdatedOn = address.CreatedOn
+            UpdatedOn = address.UpdatedOn
         };
     }
 
@@ -76,7 +66,7 @@ public static class CustomerMapper {
             Country = address.Country,
             PostalCode = address.PostalCode,
             CreatedOn = address.CreatedOn,
-            UpdatedOn = address.CreatedOn
+            UpdatedOn = address.UpdatedOn
         };
     }
 }
