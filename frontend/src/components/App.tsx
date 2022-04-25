@@ -1,4 +1,4 @@
-import React = require("react");
+import * as React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -10,9 +10,9 @@ const queryClient = new QueryClient();
 const theme = createTheme({
     // @ts-expect-error
     colors: {
-      main: indigo[500],
+        main: indigo[500],
     },
-  });
+});
 
 export default function App() {
     return (
