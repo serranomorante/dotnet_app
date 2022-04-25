@@ -1,7 +1,7 @@
 export interface IProduct {
-  id: number;
-  createdOn: Date;
-  updatedOn: Date;
+  id?: number;
+  createdOn?: Date;
+  updatedOn?: Date;
   name: string;
   description: string;
   price: number;
@@ -10,7 +10,7 @@ export interface IProduct {
 }
 
 export interface IProductInventory {
-  id: number;
+  id?: number;
   product: IProduct;
   quantityOnHand: number;
   idealQuantity: number;
