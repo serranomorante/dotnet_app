@@ -8,7 +8,7 @@ import axiosInstance from "../utils/axios";
 export class InventoryService {
   public async getInventory(): Promise<any> {
     try {
-      const url = "/customer";
+      const url = "/inventory";
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {

@@ -31,22 +31,22 @@ public class ProductService : IProductService {
         try {
             _db.Products.Add(product);
 
-        var newInventory = new ProductInventory {
-            Product = product,
-            QuantityOnHand = 0,
-            IdealQuantity = 10
-        };
+            var newInventory = new ProductInventory {
+                Product = product,
+                QuantityOnHand = 0,
+                IdealQuantity = 10
+            };
 
-        _db.ProductInventories.Add(newInventory);
+            _db.ProductInventories.Add(newInventory);
 
-        _db.SaveChanges();
+            _db.SaveChanges();
 
-        return new ServiceResponse<Product> {
-            Data = product,
-            Time = DateTime.UtcNow,
-            Message = "Saved new product",
-            IsSuccess = true
-        };
+            return new ServiceResponse<Product> {
+                Data = product,
+                Time = DateTime.UtcNow,
+                Message = "Saved new product",
+                IsSuccess = true
+            };
         } catch (Exception e) {
             return new ServiceResponse<Product> {
                 Data = product,

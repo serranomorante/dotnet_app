@@ -20,6 +20,14 @@ public class ProductController : ControllerBase {
         return Ok(productViewModel);
     }
 
+    [HttpPost("/api/product")]
+    public ActionResult CreateProduct([FromBody] ProductModel product) {
+        _logger.LogInformation("Creating new product...");
+        var productData = ProductMapper.SerializeProductModel(product);
+        var newProduct = _productService.CreateProduct(productData);
+        return Ok(newProduct);
+    }
+
     [HttpPatch("/api/product/{id}")]
     public ActionResult ArchiveProduct(int id) {
         _logger.LogInformation("Archiving product");
