@@ -40,7 +40,7 @@ services:
       context: .
       dockerfile: ./compose/local/frontend/Dockerfile
       args:
-        - API_URL=http://192.168.237.128/api
+        - API_URL=http://localhost/api
     image: heh_shop_local_nginx
     container_name: heh_shop_local_nginx
     volumes:

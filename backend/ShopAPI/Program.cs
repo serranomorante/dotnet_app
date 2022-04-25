@@ -31,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseCors(
     builder => builder
     .WithOrigins(
-        "http://192.168.237.128:1234"
+        "http://localhost:1234"
     )
     .AllowAnyMethod()
     .AllowAnyHeader()
