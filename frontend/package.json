@@ -4,7 +4,7 @@
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build",
+    "build": "cross-env parcel build",
     "check": "tsc --noEmit",
     "clean": "rm -rf dist .cache"
   },
@@ -12,7 +12,7 @@
     "@types/parcel-env": "^0.0.1",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
-    "@types/react-table": "^7.7.11",
+    "cross-env": "^7.0.3",
     "parcel": "^2.5.0"
   },
   "dependencies": {
@@ -23,7 +23,6 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-query": "^3.38.0",
-    "react-table": "^7.7.0",
     "xstate": "^4.31.0"
   }
 }

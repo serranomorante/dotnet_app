@@ -1,9 +1,11 @@
 # Node
 FROM node:14.17-alpine AS builder
 
+ARG API_URL
 ARG APP_HOME=/app/frontend
 
 WORKDIR ${APP_HOME}
+ENV API_URL=${API_URL}
 
 COPY ./frontend/package.json ${APP_HOME}
 COPY ./frontend/yarn.lock ${APP_HOME}

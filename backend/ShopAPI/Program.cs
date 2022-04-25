@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ShopAPIDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -27,6 +27,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(
+    builder => builder
+    .WithOrigins(
+        "http://192.168.237.128:1234"
+    )
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+);
 
 app.UseAuthorization();
 

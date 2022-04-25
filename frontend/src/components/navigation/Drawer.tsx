@@ -27,6 +27,8 @@ import GroupIcon from "@material-ui/icons/Group";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import Inventory from "../views/Inventory";
+import { useQuery } from "react-query";
+import { InventoryService } from "../../services/inventoryService";
 
 const drawerWidth = 240;
 
@@ -102,6 +104,16 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const inventoryService = new InventoryService();
+
+  const customersQuery = useQuery(
+    ["get-customers"],
+    inventoryService.getInventory
+  );
+
+  console.log(`response: ${customersQuery.data}`);
+
+  console.log("api url", process.env.API_URL);
 
   const handleDrawerOpen = () => {
     setOpen(true);
