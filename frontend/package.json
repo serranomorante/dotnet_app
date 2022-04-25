@@ -16,7 +16,12 @@
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@xstate/react": "^3.0.0",
+    "axios": "^0.26.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-query": "^3.38.0",
+    "react-table": "^7.7.0",
+    "xstate": "^4.31.0"
   }
 }
