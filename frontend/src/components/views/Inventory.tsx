@@ -38,7 +38,7 @@ export default function Inventory() {
     inventoryService.getInventory
   );
 
-  const productQuery = useQuery(["product-list"], productService.getProducts);
+  const productQuery = useQuery(["get-products"], productService.getProducts);
 
   const createProduct = useMutation<unknown, unknown, IProductFormInputs, void>(
     (data) => productService.createProduct(data),
