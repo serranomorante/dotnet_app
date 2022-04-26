@@ -10,8 +10,8 @@ export interface ISalesOrder {
   isPaid: boolean;
 }
 
-interface ISalesOrderItem {
+export interface ISalesOrderItem {
   id?: number;
-  quantity: string;
+  quantity: number;
   product: IProduct;
 }

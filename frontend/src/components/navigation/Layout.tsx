@@ -183,14 +183,14 @@ export default function Layout(props: React.PropsWithChildren<{}>) {
           </ListItem>
           <ListItem
             button
-            key={"Nueva factura"}
+            key={"Generar Orden"}
             component={RouterLink}
-            to="/billing"
+            to="/invoice"
           >
             <ListItemIcon>
               <ReceiptIcon />
             </ListItemIcon>
-            <ListItemText primary={"Nueva factura"} />
+            <ListItemText primary={"Generar Orden"} />
           </ListItem>
           <ListItem button key={"Pedidos"} component={RouterLink} to="/orders">
             <ListItemIcon>
