@@ -29,7 +29,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "80:80"
+      - "8080:8080"
     env_file:
       - ./.envs/.local/.dotnet
       - ./.envs/.local/.postgres
@@ -40,7 +40,7 @@ services:
       context: .
       dockerfile: ./compose/local/frontend/Dockerfile
       args:
-        - API_URL=http://localhost/api
+        - API_URL=http://localhost:8080/api
     image: heh_shop_local_nginx
     container_name: heh_shop_local_nginx
     volumes:

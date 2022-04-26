@@ -3,7 +3,7 @@
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "cross-env API_URL=http://localhost/api parcel",
+    "start": "cross-env API_URL=http://localhost:8080/api parcel",
     "build": "cross-env parcel build",
     "check": "tsc --noEmit",
     "clean": "rm -rf dist .cache"

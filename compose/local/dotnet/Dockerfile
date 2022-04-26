@@ -41,6 +41,6 @@ COPY ./backend ${APP_HOME}
 RUN ["dotnet", "restore"]
 RUN ["dotnet", "build"]
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint"]
