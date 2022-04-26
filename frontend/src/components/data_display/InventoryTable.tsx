@@ -32,7 +32,7 @@ export default function InventoryTable(props: InventoryTableProps) {
         <TableHead>
           <TableRow>
             <TableCell>Item</TableCell>
-            <TableCell align="right">Cantidad</TableCell>
+            <TableCell align="right">Cantidad real</TableCell>
             <TableCell align="right">Cantidad ideal</TableCell>
             <TableCell align="right">Precio Unitario</TableCell>
             <TableCell align="right">Impuestos</TableCell>
@@ -46,8 +46,10 @@ export default function InventoryTable(props: InventoryTableProps) {
               </TableCell>
               <TableCell align="right">{inventory.quantityOnHand}</TableCell>
               <TableCell align="right">{inventory.idealQuantity}</TableCell>
-              <TableCell align="right">{inventory.product.price}</TableCell>
-              <TableCell align="right">{inventory.product.isTaxable}</TableCell>
+              <TableCell align="right">$ {inventory.product.price}</TableCell>
+              <TableCell align="right">
+                {inventory.product.isTaxable ? "Sí" : "No"}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

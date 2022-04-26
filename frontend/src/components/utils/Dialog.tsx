@@ -1,14 +1,29 @@
-import React from "react";
+import * as React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
+import MaterialDialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { UnpackNestedValue, useFormContext } from "react-hook-form";
 
-export default function FormDialog() {
+interface DialogProps<IFormInputs> {
+  children: React.ReactElement;
+  clickableButtonText: string;
+  titleText: string;
+  messageText: string;
+  formSubmit: (data: IFormInputs) => void;
+}
+
+/**
+ * Dialog component for forms
+ * @returns
+ */
+export default function Dialog<IFormInputs>(props: DialogProps<IFormInputs>) {
+  const { children, clickableButtonText, titleText, messageText, formSubmit } =
+    props;
   const [open, setOpen] = React.useState(false);
+  const { handleSubmit } = useFormContext<IFormInputs>();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,40 +33,35 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  function formSubmitHandler(data: UnpackNestedValue<IFormInputs>) {
+    formSubmit(data as IFormInputs);
+    handleClose();
+  }
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
+        {clickableButtonText}
       </Button>
-      <Dialog
+      <MaterialDialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">{titleText}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
+          <DialogContentText>{messageText}</DialogContentText>
+          {children}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            Cancelar
           </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
+          <Button onClick={handleSubmit(formSubmitHandler)} color="primary">
+            Guardar
           </Button>
         </DialogActions>
-      </Dialog>
+      </MaterialDialog>
     </div>
   );
 }

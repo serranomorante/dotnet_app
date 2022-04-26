@@ -1,24 +1,35 @@
-import produce from "immer";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { IProductInventory } from "../../@types/IProduct";
 import { InventoryService } from "../../services/inventoryService";
 import { ProductService } from "../../services/productService";
 import InventoryTable from "../data_display/InventoryTable";
-import ProductForm, { FormValues } from "../forms/ProductForm";
-import Modal from "../utils/Modal";
-import SimpleModal from "../utils/Modal";
+import Dialog from "../utils/Dialog";
+import produce from "immer";
+import ProductForm, {
+  IProductFormInputs,
+  productFormSchema,
+} from "../forms/ProductForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider } from "react-hook-form";
 
+/**
+ * Inventory page component
+ * @returns
+ */
 export default function Inventory() {
   const inventoryService = new InventoryService();
   const productService = new ProductService();
   const queryClient = useQueryClient();
+  const methods = useForm<IProductFormInputs>({
+    resolver: zodResolver(productFormSchema),
+  });
 
   const inventoryQuery = useQuery(
     ["get-inventory"],
     inventoryService.getInventory
   );
 
-  const createProduct = useMutation<unknown, unknown, FormValues, void>(
+  const createProduct = useMutation<unknown, unknown, IProductFormInputs, void>(
     (data) => productService.createProduct(data),
     {
       onMutate: async (data) => {
@@ -65,9 +76,16 @@ export default function Inventory() {
 
   return (
     <div>
-      <Modal>
-        <ProductForm handleSubmit={(values) => createProduct.mutate(values)} />
-      </Modal>
+      <FormProvider {...methods}>
+        <Dialog<IProductFormInputs>
+          clickableButtonText="Crear item"
+          titleText="Crear item"
+          messageText="Crea un nuevo producto"
+          formSubmit={(data) => createProduct.mutate(data)}
+        >
+          <ProductForm />
+        </Dialog>
+      </FormProvider>
 
       <InventoryTable inventoryData={inventoryQuery.data} />
     </div>
