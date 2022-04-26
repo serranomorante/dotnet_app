@@ -143,8 +143,8 @@ export default function Inventory() {
     <div>
       <FormProvider {...addInventoryFormMethods}>
         <Dialog<IProductFormInputs>
-          clickableButtonText="Crear item"
-          titleText="Crear item"
+          clickableButtonText="Nuevo Producto"
+          titleText="Nuevo Producto"
           messageText="Crea un nuevo producto"
           formSubmit={(data) => createProduct.mutate(data)}
         >
@@ -153,8 +153,8 @@ export default function Inventory() {
       </FormProvider>
       <FormProvider {...updateInventoryFormMethods}>
         <Dialog<IUpdateInventoryFormInputs>
-          clickableButtonText="Actualizar inventario"
-          titleText="Actualizar inventario"
+          clickableButtonText="Ingresar Inventario"
+          titleText="Ingresar Inventario"
           messageText="Ingreso de inventario"
           formSubmit={(data) => updateInventory.mutate(data)}
         >
