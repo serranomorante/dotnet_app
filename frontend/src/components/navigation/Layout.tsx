@@ -10,7 +10,6 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,15 +19,12 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import Link from "@material-ui/core/Link";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import GroupIcon from "@material-ui/icons/Group";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import Inventory from "../views/Inventory";
-import { useQuery } from "react-query";
-import { InventoryService } from "../../services/inventoryService";
+import { Link as RouterLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -100,7 +96,8 @@ const useStyles = makeStyles((theme: Theme) =>
  * Drawer component
  * @returns
  */
-export default function MiniDrawer() {
+export default function Layout(props: React.PropsWithChildren<{}>) {
+  const { children } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -162,25 +159,40 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          <ListItem button key={"Inventario"}>
+          <ListItem
+            button
+            key={"Inventario"}
+            component={RouterLink}
+            to="/inventory"
+          >
             <ListItemIcon>
               <ListAltIcon />
             </ListItemIcon>
             <ListItemText primary={"Inventario"} />
           </ListItem>
-          <ListItem button key={"Gestionar clientes"}>
+          <ListItem
+            button
+            key={"Gestionar clientes"}
+            component={RouterLink}
+            to="/customer"
+          >
             <ListItemIcon>
               <GroupIcon />
             </ListItemIcon>
             <ListItemText primary={"Gestionar clientes"} />
           </ListItem>
-          <ListItem button key={"Nueva factura"}>
+          <ListItem
+            button
+            key={"Nueva factura"}
+            component={RouterLink}
+            to="/billing"
+          >
             <ListItemIcon>
               <ReceiptIcon />
             </ListItemIcon>
             <ListItemText primary={"Nueva factura"} />
           </ListItem>
-          <ListItem button key={"Pedidos"}>
+          <ListItem button key={"Pedidos"} component={RouterLink} to="/orders">
             <ListItemIcon>
               <AttachMoneyIcon />
             </ListItemIcon>
@@ -191,8 +203,7 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Inventory />
-        <Typography paragraph>...</Typography>
+        {children}
       </main>
     </div>
   );
