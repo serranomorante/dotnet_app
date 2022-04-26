@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import BasicTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,6 +18,24 @@ interface SalesOrderTableProps {
   salesOrderData: ISalesOrder[];
 }
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 /**
  * Table for sales order data
  * @returns
@@ -31,18 +49,20 @@ export default function SalesOrderTable(props: SalesOrderTableProps) {
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Cliente</TableCell>
-            <TableCell align="right">Pagado</TableCell>
+            <StyledTableCell>Cliente</StyledTableCell>
+            <StyledTableCell align="right">Pagado</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {salesOrderData.map((salesOrder) => (
-            <TableRow key={salesOrder.id}>
-              <TableCell component="th" scope="row">
+            <StyledTableRow key={salesOrder.id}>
+              <StyledTableCell component="th" scope="row">
                 {`${salesOrder.customer.firstName} ${salesOrder.customer.lastName}`}
-              </TableCell>
-              <TableCell align="right">{salesOrder.isPaid}</TableCell>
-            </TableRow>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {salesOrder.isPaid}
+              </StyledTableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
       </BasicTable>

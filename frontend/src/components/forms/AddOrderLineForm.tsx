@@ -17,9 +17,14 @@ const useStyles = makeStyles({
 
 export const addOrderLineSchema = z.object({
   product: z.number(),
-  quantity: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
-    message: "Se esperaba número, se recibió string",
-  }),
+  quantity: z
+    .string()
+    .refine(
+      (val) => !Number.isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0,
+      {
+        message: "Por favor ingrese un valor numérico válido",
+      }
+    ),
 });
 
 export interface OptionType {
@@ -64,10 +69,10 @@ export default function AddOrderLineForm(props: AddOrderLineFormProps) {
           />
         )}
       />
+      {errors.product && <span>Debe seleccionar 1 producto</span>}
       <Controller
         name="quantity"
         control={control}
-        defaultValue={1}
         render={({ field }) => (
           <TextField
             {...field}

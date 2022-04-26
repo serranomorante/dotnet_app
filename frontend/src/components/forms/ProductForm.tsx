@@ -31,9 +31,14 @@ export const productFormSchema = z.object({
     .string()
     .max(500, { message: "Has alcanzado el máximo permitido" })
     .min(3, "Por favor ingrese un valor mayor a 3 dígitos"),
-  price: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
-    message: "Se esperaba número, se recibió string",
-  }),
+  price: z
+    .string()
+    .refine(
+      (val) => !Number.isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0,
+      {
+        message: "Por favor, ingrese un valor válido",
+      }
+    ),
   isTaxable: z.boolean().optional(),
   isArchived: z.boolean().optional(),
 });

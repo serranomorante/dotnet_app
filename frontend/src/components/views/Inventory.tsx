@@ -17,12 +17,29 @@ import UpdateInventoryForm, {
   OptionType,
   updateInventorySchema,
 } from "../forms/UpdateInventoryForm";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  title: {
+    fontSize: "3em",
+    marginBottom: 10,
+  },
+  actionContainer: {
+    display: "flex",
+    marginBottom: 10,
+  },
+  formWrapper: {
+    marginRight: 7,
+  },
+});
 
 /**
  * Inventory page component
  * @returns
  */
 export default function Inventory() {
+  const classes = useStyles();
   const inventoryService = new InventoryService();
   const productService = new ProductService();
   const queryClient = useQueryClient();
@@ -141,29 +158,37 @@ export default function Inventory() {
 
   return (
     <div>
-      <FormProvider {...addInventoryFormMethods}>
-        <Dialog<IProductFormInputs>
-          clickableButtonText="Nuevo Producto"
-          titleText="Nuevo Producto"
-          messageText="Crea un nuevo producto"
-          formSubmit={(data) => createProduct.mutate(data)}
-        >
-          <ProductForm />
-        </Dialog>
-      </FormProvider>
-      <FormProvider {...updateInventoryFormMethods}>
-        <Dialog<IUpdateInventoryFormInputs>
-          clickableButtonText="Ingresar Inventario"
-          titleText="Ingresar Inventario"
-          messageText="Ingreso de inventario"
-          formSubmit={(data) => updateInventory.mutate(data)}
-        >
-          <UpdateInventoryForm
-            options={prepareProducts(productQuery.data) || []}
-          />
-        </Dialog>
-      </FormProvider>
-
+      <Typography className={classes.title} variant="h2" noWrap>
+        Inventarios
+      </Typography>
+      <div className={classes.actionContainer}>
+        <div className={classes.formWrapper}>
+          <FormProvider {...addInventoryFormMethods}>
+            <Dialog<IProductFormInputs>
+              clickableButtonText="Nuevo Producto"
+              titleText="Nuevo Producto"
+              messageText="Crea un nuevo producto"
+              formSubmit={(data) => createProduct.mutate(data)}
+            >
+              <ProductForm />
+            </Dialog>
+          </FormProvider>
+        </div>
+        <div>
+          <FormProvider {...updateInventoryFormMethods}>
+            <Dialog<IUpdateInventoryFormInputs>
+              clickableButtonText="Ingresar Inventario"
+              titleText="Ingresar Inventario"
+              messageText="Ingreso de inventario"
+              formSubmit={(data) => updateInventory.mutate(data)}
+            >
+              <UpdateInventoryForm
+                options={prepareProducts(productQuery.data) || []}
+              />
+            </Dialog>
+          </FormProvider>
+        </div>
+      </div>
       <InventoryTable inventoryData={inventoryQuery.data} />
     </div>
   );

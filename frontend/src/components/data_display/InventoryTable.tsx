@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import BasicTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,6 +18,24 @@ interface InventoryTableProps {
   inventoryData: IProductInventory[];
 }
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 /**
  * Table for inventory data
  * @returns
@@ -31,26 +49,32 @@ export default function InventoryTable(props: InventoryTableProps) {
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Item</TableCell>
-            <TableCell align="right">Cantidad real</TableCell>
-            <TableCell align="right">Cantidad ideal</TableCell>
-            <TableCell align="right">Precio Unitario</TableCell>
-            <TableCell align="right">Impuestos</TableCell>
+            <StyledTableCell>Item</StyledTableCell>
+            <StyledTableCell align="right">Cantidad real</StyledTableCell>
+            <StyledTableCell align="right">Cantidad ideal</StyledTableCell>
+            <StyledTableCell align="right">Precio Unitario</StyledTableCell>
+            <StyledTableCell align="right">Impuestos</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {inventoryData.map((inventory) => (
-            <TableRow key={inventory.id}>
-              <TableCell component="th" scope="row">
+            <StyledTableRow key={inventory.id}>
+              <StyledTableCell component="th" scope="row">
                 {inventory.product.name}
-              </TableCell>
-              <TableCell align="right">{inventory.quantityOnHand}</TableCell>
-              <TableCell align="right">{inventory.idealQuantity}</TableCell>
-              <TableCell align="right">$ {inventory.product.price}</TableCell>
-              <TableCell align="right">
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {inventory.quantityOnHand}
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {inventory.idealQuantity}
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                $ {inventory.product.price}
+              </StyledTableCell>
+              <StyledTableCell align="right">
                 {inventory.product.isTaxable ? "Sí" : "No"}
-              </TableCell>
-            </TableRow>
+              </StyledTableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
       </BasicTable>

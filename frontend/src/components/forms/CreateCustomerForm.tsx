@@ -2,7 +2,7 @@ import * as z from "zod";
 import { Controller, useFormContext } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { ICustomer, ICustomerAddress } from "../../@types/ICustomer";
+import { ICustomerAddress } from "../../@types/ICustomer";
 
 export interface ICreateCustomerFormInputs {
   firstName: string;
@@ -17,10 +17,13 @@ const useStyles = makeStyles({
 });
 
 export const createCustomerFormSchema = z.object({
-  firstName: z.string().max(255),
-  lastName: z.string().max(255),
+  firstName: z.string().max(255).min(3, { message: "Este campo es requerido" }),
+  lastName: z.string().max(255).min(3, { message: "Este campo es requerido" }),
   primaryAddress: z.object({
-    addressLine1: z.string().max(255),
+    addressLine1: z
+      .string()
+      .max(255)
+      .min(3, { message: "Este campo es requerido" }),
     addressLine2: z.string().max(255),
     city: z.string().max(127),
     state: z.string().max(127),

@@ -17,9 +17,14 @@ const useStyles = makeStyles({
 
 export const updateInventorySchema = z.object({
   productId: z.number().positive({ message: "Id de producto inválida" }),
-  adjustment: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
-    message: "Se esperaba número, se recibió string",
-  }),
+  adjustment: z
+    .string()
+    .refine(
+      (val) => !Number.isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0,
+      {
+        message: "Por favor ingrese un valor válido",
+      }
+    ),
 });
 
 export interface OptionType {

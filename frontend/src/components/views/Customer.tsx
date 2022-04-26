@@ -11,12 +11,29 @@ import CreateCustomerForm, {
 } from "../forms/CreateCustomerForm";
 import { ICustomer } from "../../@types/ICustomer";
 import CustomersTable from "../data_display/CustomersTable";
+import { makeStyles } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  title: {
+    fontSize: "3em",
+    marginBottom: 10,
+  },
+  actionContainer: {
+    display: "flex",
+    marginBottom: 10,
+  },
+  formWrapper: {
+    marginRight: 7,
+  },
+});
 
 /**
  * Customer page component
  * @returns
  */
 export default function Customer() {
+  const classes = useStyles();
   const customerService = new CustomerService();
   const queryClient = useQueryClient();
   const addCustomerFormMethods = useForm<ICreateCustomerFormInputs>({
@@ -75,16 +92,23 @@ export default function Customer() {
 
   return (
     <div>
-      <FormProvider {...addCustomerFormMethods}>
-        <Dialog<ICreateCustomerFormInputs>
-          clickableButtonText="Nuevo cliente"
-          titleText="Nuevo cliente"
-          messageText="Crea un nuevo cliente"
-          formSubmit={(data) => createCustomer.mutate(data)}
-        >
-          <CreateCustomerForm />
-        </Dialog>
-      </FormProvider>
+      <Typography className={classes.title} variant="h2" noWrap>
+        Clientes
+      </Typography>
+      <div className={classes.actionContainer}>
+        <div className={classes.formWrapper}>
+          <FormProvider {...addCustomerFormMethods}>
+            <Dialog<ICreateCustomerFormInputs>
+              clickableButtonText="Nuevo cliente"
+              titleText="Nuevo cliente"
+              messageText="Crea un nuevo cliente"
+              formSubmit={(data) => createCustomer.mutate(data)}
+            >
+              <CreateCustomerForm />
+            </Dialog>
+          </FormProvider>
+        </div>
+      </div>
       <CustomersTable customersData={customersQuery.data} />
     </div>
   );

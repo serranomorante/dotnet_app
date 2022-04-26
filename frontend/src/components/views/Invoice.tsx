@@ -35,7 +35,11 @@ const useStyles = makeStyles({
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 22,
+    fontSize: "3em",
+    marginBottom: 10,
+  },
+  indicator: {
+    fontSize: "1.5em",
     marginBottom: 10,
   },
   pos: {
@@ -43,6 +47,16 @@ const useStyles = makeStyles({
   },
   select: {
     zIndex: 1000,
+  },
+  actionContainer: {
+    display: "flex",
+    marginBottom: 10,
+  },
+  formWrapper: {
+    marginRight: 7,
+  },
+  paper: {
+    marginBottom: 10,
   },
 });
 
@@ -143,9 +157,12 @@ export default function Invoice() {
 
   return (
     <div>
-      <Paper elevation={1}>
+      <Typography className={classes.title} variant="h2" noWrap>
+        Generar orden
+      </Typography>
+      <Paper className={classes.paper} elevation={1}>
         <Box p={2}>
-          <Typography className={classes.title} variant="h1">
+          <Typography className={classes.indicator} variant="h1">
             {state.matches("waitingForCustomerSelection") &&
               "Seleccione un cliente"}
             {state.matches("addingOrderItems") && "Añada productos a la orden"}
@@ -183,10 +200,15 @@ export default function Invoice() {
           Siguiente
         </Button>
       )}
-      {state.matches("addingOrderItems") &&
-        state.context.lineItems.length > 0 && (
+
+      {state.matches("addingOrderItems") && state.context.lineItems.length > 0 && (
+        <div className={classes.paper}>
+          <Typography className={classes.title} variant="h2" noWrap>
+            Su orden
+          </Typography>
           <InvoiceTable invoiceData={state.context.lineItems} />
-        )}
+        </div>
+      )}
       {state.matches("addingOrderItems") && (
         <Button
           color="primary"

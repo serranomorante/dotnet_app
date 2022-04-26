@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import BasicTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -13,6 +13,24 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
 });
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 interface InvoiceTableProps {
   invoiceData: ISalesOrderItem[];
@@ -31,20 +49,24 @@ export default function InvoiceTable(props: InvoiceTableProps) {
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Producto</TableCell>
-            <TableCell align="right">Cantidad</TableCell>
-            <TableCell align="right">Valor</TableCell>
+            <StyledTableCell>Producto</StyledTableCell>
+            <StyledTableCell align="right">Cantidad</StyledTableCell>
+            <StyledTableCell align="right">Valor Unit.</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {invoiceData.map((invoice) => (
-            <TableRow key={invoice.product.id}>
-              <TableCell component="th" scope="row">
+            <StyledTableRow key={invoice.product.id}>
+              <StyledTableCell component="th" scope="row">
                 {invoice.product.name}
-              </TableCell>
-              <TableCell align="right">{invoice.quantity}</TableCell>
-              <TableCell align="right">{invoice.product.price}</TableCell>
-            </TableRow>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {invoice.quantity}
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {invoice.product.price}
+              </StyledTableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
       </BasicTable>
