@@ -4,6 +4,19 @@ import { IProduct } from "../@types/IProduct";
 import axiosInstance from "../utils/axios";
 
 export class ProductService {
+  public async getProducts(): Promise<IProduct[]> {
+    try {
+      const url = "/product";
+      const response = await axiosInstance.get<IProduct[]>(url);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error.response?.data;
+      }
+      throw error;
+    }
+  }
+
   public async createProduct(
     product: IProduct
   ): Promise<ServiceResponse<IProduct>> {
