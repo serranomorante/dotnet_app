@@ -22,6 +22,7 @@ export interface Typegen0 {
   matchesStates:
     | "waitingForCustomerSelection"
     | "addingOrderItems"
+    | "generatingInvoice"
     | "invoiceGenerationDone";
   tags: never;
 }

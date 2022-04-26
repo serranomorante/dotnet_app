@@ -12,7 +12,8 @@ type TEvent =
   | { type: "ADD_ORDER_ITEM"; orderItem: ISalesOrderItem }
   | { type: "CHANGE_CUSTOMER" }
   | { type: "GO_TO_PRODUCT_SELECTION" }
-  | { type: "SUBMIT_INVOICE" };
+  | { type: "SUBMIT_INVOICE" }
+  | { type: "INVOICE_GENERATED" };
 
 const generateInvoiceMachine = createMachine(
   {
@@ -43,6 +44,13 @@ const generateInvoiceMachine = createMachine(
             actions: "addOrderItem",
           },
           SUBMIT_INVOICE: {
+            target: "generatingInvoice",
+          },
+        },
+      },
+      generatingInvoice: {
+        on: {
+          INVOICE_GENERATED: {
             target: "invoiceGenerationDone",
           },
         },

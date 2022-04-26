@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { CustomerService } from "../../services/customerService";
 import { InvoiceService } from "../../services/invoiceService";
 import Select from "react-select";
@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../actions/SubmitButton";
 import InvoiceTable from "../data_display/InvoiceTable";
 import { Navigate } from "react-router-dom";
+import { IInvoice } from "../../@types/IInvoice";
 
 const useStyles = makeStyles({
   root: {
@@ -71,6 +72,15 @@ export default function Invoice() {
     resolver: zodResolver(addOrderLineSchema),
   });
 
+  const generateInvoice = useMutation<unknown, unknown, IInvoice, void>(
+    (data) => invoiceService.generateInvoice(data),
+    {
+      onSuccess: () => {
+        send("INVOICE_GENERATED");
+      },
+    }
+  );
+
   function handleAddOrderLine(data: IAddOrderLineFormInputs) {
     const product = productsQuery.data?.find(
       (product) => product.id === data.product
@@ -105,6 +115,15 @@ export default function Invoice() {
     },
     [productsQuery.data]
   );
+
+  React.useEffect(() => {
+    if (state.matches("generatingInvoice")) {
+      generateInvoice.mutate({
+        customerId: state.context.customerId as number,
+        lineItems: state.context.lineItems,
+      });
+    }
+  }, [state]);
 
   if (ordersQuery.isLoading) {
     return <div>Cargando...</div>;
