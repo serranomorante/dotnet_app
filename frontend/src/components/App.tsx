@@ -7,6 +7,7 @@ import { indigo } from "@material-ui/core/colors";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import InventoryPage from "../pages/InventoryPage";
 import CustomerPage from "../pages/CustomerPage";
+import OrderPage from "../pages/OrderPage";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +30,7 @@ export default function App() {
               <Route path="/inventory" element={<InventoryPage />} />
               <Route path="/customer" element={<CustomerPage />} />
               <Route path="/billing" element={<CustomerPage />} />
-              <Route path="/orders" element={<CustomerPage />} />
+              <Route path="/orders" element={<OrderPage />} />
             </Routes>
           </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
