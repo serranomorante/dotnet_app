@@ -28,12 +28,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+// each allowed origin as comma separated strings
+var allowedOriginsFromEnv = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS") ?? "";
+
 app.UseCors(
     builder => builder
-    .WithOrigins(
-        "http://localhost:1234",
-        "https://heh.serranomorante.com"
-    )
+    .WithOrigins(allowedOriginsFromEnv.Split(","))
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
