@@ -40,7 +40,7 @@ services:
       context: .
       dockerfile: ./compose/production/frontend/Dockerfile
       args:
-        - API_URL=http://api:8080/api
+        - API_URL=https://heh-api.serranomorante.com/api
     image: heh_shop_production_nginx
     container_name: heh_shop_nginx
     volumes:
