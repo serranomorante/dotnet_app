@@ -3,8 +3,7 @@
 # HEH Shop
 ## Gestión de inventarios
 
-HEH Shop es una aplicación web para la gestión de inventarios creada con C# + Postgres en el backend y React + Typescript en el frontend.
-
+HEH Shop es una aplicación web para la gestión de inventarios creada en .NET (con Postgres) en el backend y React.js (con Typescript) en el frontend.
 
 ## Características
 
@@ -54,3 +53,5 @@ Esperamos hasta ver la siguiente pantalla o similar:
 Sin cerrar la consola de comando, nos dirigimos a nuestro navegador de preferencia y buscamos la siguiente url:
 [localhost:1234](http://localhost:1234)
 Y desde ahí podemos comenzar a navegar por el aplicativo.
+
+## [DEMO](https://heh.serranomorante.com)
