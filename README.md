@@ -1,3 +1,5 @@
+> Ejercicio de programación 👨‍🔬
+
 # HEH Shop
 ## Gestión de inventarios
 
