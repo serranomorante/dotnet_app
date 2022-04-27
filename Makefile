@@ -3,7 +3,7 @@ PROJECT_NAME ?= ShopAPI
 ORG_NAME ?= ShopAPI
 REPO_NAME ?= heh_shop
 
-.PHONY: migrations db dcup dcbuild gitstatus gitpush gitpull
+.PHONY: migrations db dcup dcbuild
 
 migrations:
 	cd ./backend/ShopAPI.Data && dotnet ef --startup-project ../ShopAPI migrations add $(mname) && cd .. && cd ..
@@ -16,16 +16,3 @@ dcup:
 
 dcbuild:
 	docker-compose build
-
-gitstatus:
-	git status https://$(token)@github.com/serranomorante/heh_shop.git
-
-gitpush:
-	git push https://$(token)@github.com/serranomorante/heh_shop.git
-
-gitpull:
-	git pull https://$(token)@github.com/serranomorante/heh_shop.git
-
-
-
-
