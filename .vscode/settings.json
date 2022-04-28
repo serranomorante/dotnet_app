@@ -1,7 +1,5 @@
 {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
-    "vssolution.altSolutionFolders": [
-        "/workspace/backend"
-    ]
+    "vssolution.altSolutionFolders": ["backend"],
 }
