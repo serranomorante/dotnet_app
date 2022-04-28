@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 public class TestDatabaseFixture
 {
-    private static string ConnectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ?? "";
+    private readonly string ConnectionString;
     private static readonly object _lock = new();
     private static bool _databaseInitialized;
 
     public TestDatabaseFixture()
     {
+        ConnectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ?? "";
         var now = DateTime.UtcNow;
         lock (_lock)
         {
