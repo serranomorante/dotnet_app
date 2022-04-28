@@ -11,5 +11,9 @@ fi
 
 export ConnectionStrings__DefaultConnection="Host=${POSTGRES_HOST};Database=${POSTGRES_DB};Port=${POSTGRES_PORT};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
 
+export TestDB="Host=${POSTGRES_HOST};Database=${POSTGRES_TEST_DB};Port=${POSTGRES_PORT};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};"
+
+export ALLOWED_ORIGINS="${ALLOWED_ORIGINS}"
+
 
 /wait-for postgres:5432 && exec "$@"
