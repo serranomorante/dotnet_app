@@ -5,3 +5,8 @@ POSTGRES_PORT=5432
 POSTGRES_DB=heh_shop
 POSTGRES_USER=pEWcKPHqmspWwWsxrqURDYUCalJmMwVb
 POSTGRES_PASSWORD=V9qveVS06aSyhEmzV8ZmgQBd53c37F48n3loJBGBTCJOU7sefwS6EMWzdL6KE8Ks
+
+
+# PostgreSQL (Test DB)
+# ------------------------------------------------------------------------------
+POSTGRES_TEST_DB=test_heh_shop_db

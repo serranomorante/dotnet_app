@@ -18,6 +18,7 @@ services:
       # Persist vscode extensions between reboots
       - vscode-extensions:/root/.vscode-server/extensions
     env_file:
+      - ../.envs/.local/.dotnet
       - ../.envs/.local/.postgres
     networks:
       - heh-shop-network

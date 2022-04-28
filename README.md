@@ -54,4 +54,17 @@ Sin cerrar la consola de comando, nos dirigimos a nuestro navegador de preferenc
 [localhost:1234](http://localhost:1234)
 Y desde ahí podemos comenzar a navegar por el aplicativo.
 
+
 ## [DEMO](https://heh.serranomorante.com)
+
+
+## Otros detalles
+#### ¿Cómo acceder al shell (psql) de postgres?
+Base de datos principal
+```sh
+docker-compose run --rm postgres psql -d postgres://$POSTGRES_USER@$POSTGRES_HOST/$POSTGRES_DB
+```
+Base de datos para tests
+```sh
+docker-compose run --rm postgres psql -d postgres://$POSTGRES_USER@$POSTGRES_HOST/$POSTGRES_TEST_DB
+```

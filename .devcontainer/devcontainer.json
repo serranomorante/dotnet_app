@@ -8,12 +8,16 @@
     "workspaceFolder": "/workspace",
 	// Make sure the required docker network and volume exist before creating containers
 	"initializeCommand": ".devcontainer/docker-init.sh",
-	"postStartCommand": ".devcontainer/start",
+	"postCreateCommand": ".devcontainer/start",
 	// Set *default* container specific settings.json values on container create.
 	// "settings": {
     //     "#terminal.integrated.defaultProfile.linux#": "/bin/bash"
     // },
-
+	"remoteEnv": {
+		"TestDB": "Host=${containerEnv:POSTGRES_HOST};Database=${containerEnv:POSTGRES_TEST_DB};Port=${containerEnv:POSTGRES_PORT};Username=${containerEnv:POSTGRES_USER};Password=${containerEnv:POSTGRES_PASSWORD};",
+		"ConnectionStrings__DefaultConnection": "Host=${containerEnv:POSTGRES_HOST};Database=${containerEnv:POSTGRES_DB};Port=${containerEnv:POSTGRES_PORT};Username=${containerEnv:POSTGRES_USER};Password=${containerEnv:POSTGRES_PASSWORD};",
+		"ALLOWED_ORIGINS": "${containerEnv:ALLOWED_ORIGINS}"
+	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"ms-dotnettools.csharp",
