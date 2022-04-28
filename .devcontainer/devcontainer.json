@@ -13,7 +13,9 @@
 	// "settings": {
     //     "#terminal.integrated.defaultProfile.linux#": "/bin/bash"
     // },
-
+	"remoteEnv": {
+		"ConnectionStrings__DefaultConnection": "Host=${localEnv:POSTGRES_HOST};Database=${localEnv:POSTGRES_DB};Port=${localEnv:POSTGRES_PORT};Username=${localEnv:POSTGRES_USER};Password=${localEnv:POSTGRES_PASSWORD};"
+	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"ms-dotnettools.csharp",
