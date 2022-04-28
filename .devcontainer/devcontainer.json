@@ -15,7 +15,8 @@
     // },
 	"remoteEnv": {
 		"TestDB": "Host=${containerEnv:POSTGRES_HOST};Database=${containerEnv:POSTGRES_TEST_DB};Port=${containerEnv:POSTGRES_PORT};Username=${containerEnv:POSTGRES_USER};Password=${containerEnv:POSTGRES_PASSWORD};",
-		"ConnectionStrings__DefaultConnection": "Host=${containerEnv:POSTGRES_HOST};Database=${containerEnv:POSTGRES_DB};Port=${containerEnv:POSTGRES_PORT};Username=${containerEnv:POSTGRES_USER};Password=${containerEnv:POSTGRES_PASSWORD};"
+		"ConnectionStrings__DefaultConnection": "Host=${containerEnv:POSTGRES_HOST};Database=${containerEnv:POSTGRES_DB};Port=${containerEnv:POSTGRES_PORT};Username=${containerEnv:POSTGRES_USER};Password=${containerEnv:POSTGRES_PASSWORD};",
+		"ALLOWED_ORIGINS": "${containerEnv:ALLOWED_ORIGINS}"
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
