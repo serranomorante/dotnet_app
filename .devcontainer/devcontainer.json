@@ -8,7 +8,7 @@
     "workspaceFolder": "/workspace",
 	// Make sure the required docker network and volume exist before creating containers
 	"initializeCommand": ".devcontainer/docker-init.sh",
-	"postCreateCommand": ".devcontainer/start",
+	"postStartCommand": ".devcontainer/start",
 	// Set *default* container specific settings.json values on container create.
 	// "settings": {
     //     "#terminal.integrated.defaultProfile.linux#": "/bin/bash"
