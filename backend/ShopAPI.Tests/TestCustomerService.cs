@@ -61,6 +61,6 @@ public class TestCustomerService : IClassFixture<TestDatabaseFixture>
         // Assert
         // --------------------
         context.Customers.Count().Should().Be(3);
-        context.Customers.OrderBy(customer => customer.Id).Last().Id.Should().Be(9999);
+        context.Customers.OrderBy(customer => customer.Id).Last().Id.Should().Be(expectedId);
     }
 }
