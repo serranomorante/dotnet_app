@@ -10,7 +10,7 @@ public class TestDatabaseFixture
 
     public TestDatabaseFixture()
     {
-        ConnectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ?? "";
+        ConnectionString = Environment.GetEnvironmentVariable("TestDB") ?? "";
         var now = DateTime.UtcNow;
         lock (_lock)
         {
