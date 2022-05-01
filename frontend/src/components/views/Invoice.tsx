@@ -8,6 +8,7 @@ import { ProductService } from "../../services/productService";
 import { ICustomer } from "../../@types/ICustomer";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
 import { useMachine } from "@xstate/react";
 import generateInvoiceMachine from "../../fsm/generateInvoiceMachine";
 import Paper from "@material-ui/core/Paper";
@@ -24,6 +25,8 @@ import SubmitButton from "../actions/SubmitButton";
 import InvoiceTable from "../data_display/InvoiceTable";
 import { Navigate } from "react-router-dom";
 import { IInvoice } from "../../@types/IInvoice";
+import { InventoryService } from "../../services/inventoryService";
+import { ISalesOrderItem } from "../../@types/ISalesOrder";
 
 const useStyles = makeStyles({
   root: {
@@ -58,6 +61,12 @@ const useStyles = makeStyles({
   paper: {
     marginBottom: 10,
   },
+  formTitle: {
+    display: "flex",
+  },
+  stock: {
+    marginLeft: 4,
+  },
 });
 
 export interface OptionType {
@@ -76,16 +85,20 @@ export default function Invoice() {
   const orderService = new OrderService();
   const customerService = new CustomerService();
   const productService = new ProductService();
+  const inventoryService = new InventoryService();
   const ordersQuery = useQuery(["get-orders"], orderService.getOrders);
   const productsQuery = useQuery(["get-products"], productService.getProducts);
   const customersQuery = useQuery(
     ["get-customers"],
     customerService.getCustomers
   );
+  const inventoryQuery = useQuery(
+    ["get-inventory"],
+    inventoryService.getInventory
+  );
   const addOrderLineFormMethods = useForm<IAddOrderLineFormInputs>({
     resolver: zodResolver(addOrderLineSchema),
   });
-
   const generateInvoice = useMutation<unknown, unknown, IInvoice, void>(
     (data) => invoiceService.generateInvoice(data),
     {
@@ -95,13 +108,83 @@ export default function Invoice() {
     }
   );
 
-  function handleAddOrderLine(data: IAddOrderLineFormInputs) {
-    const product = productsQuery.data?.find(
-      (product) => product.id === data.product
+  /**
+   * Get the available stock for a product
+   * @param orderItem
+   * @returns
+   */
+  function getProductStock(productId: number): number {
+    if (typeof inventoryQuery.data === "undefined") return 0;
+
+    const inventory = inventoryQuery.data.find(
+      (inventory) => inventory.product.id == productId
     );
-    const orderItem = { product, quantity: Number(data.quantity) };
+
+    if (typeof inventory === "undefined") return 0;
+
+    return inventory.quantityOnHand;
+  }
+
+  /**
+   * Get a product complete data from product id
+   */
+  function getProductData(productId: number): IProduct {
+    const initialData = {
+      description: "",
+      isArchived: false,
+      isTaxable: true,
+      name: "",
+      price: 0,
+      createdOn: new Date(),
+      updatedOn: new Date(),
+    };
+
+    if (typeof productsQuery.data === "undefined") return initialData;
+
+    const product = productsQuery.data.find(
+      (product) => product.id === productId
+    );
+
+    if (typeof product === "undefined") return initialData;
+
+    return product;
+  }
+
+  /**
+   * Get the current available stock.
+   * Fallback to a stock of 0 in case something fails.
+   */
+  const currentStock = React.useMemo(() => {
+    const productId = addOrderLineFormMethods.watch("product");
+    if (typeof productId !== "number") return 0;
+
+    const currentStock = getProductStock(productId);
+    const currentOrderLineItem = state.context.lineItems.find(
+      (lineItem) => lineItem.product.id === productId
+    );
+    const orderLineQty = currentOrderLineItem?.quantity || 0;
+    if (currentStock - orderLineQty <= 0) return 0;
+    return currentStock - orderLineQty;
+  }, [addOrderLineFormMethods.watch()]);
+
+  /**
+   * Add order item to sales order
+   * @param data
+   * @returns
+   */
+  function handleAddOrderLine(data: IAddOrderLineFormInputs) {
+    const orderItem = {
+      product: getProductData(data.product as number),
+      quantity: Number(data.quantity),
+    };
+
+    // send to machine
+    const result = send("ADD_ORDER_ITEM", {
+      orderItem: orderItem,
+      currentStock,
+    });
+    if (result.matches("addingOrderItems.outOfStockError")) return;
     addOrderLineFormMethods.reset();
-    send("ADD_ORDER_ITEM", { orderItem: orderItem });
   }
 
   const prepareCustomers = React.useCallback(
@@ -157,16 +240,33 @@ export default function Invoice() {
 
   return (
     <div>
+      {state.matches("addingOrderItems.outOfStockError") && (
+        <Alert onClose={() => null} severity="error">
+          ¡Stock no disponible!
+        </Alert>
+      )}
+
       <Typography className={classes.title} variant="h2" noWrap>
         Generar orden
       </Typography>
+
       <Paper className={classes.paper} elevation={1}>
         <Box p={2}>
-          <Typography className={classes.indicator} variant="h1">
-            {state.matches("waitingForCustomerSelection") &&
-              "Seleccione un cliente"}
-            {state.matches("addingOrderItems") && "Añada productos a la orden"}
-          </Typography>
+          <div className={classes.formTitle}>
+            <Typography className={classes.indicator} variant="h1">
+              {state.matches("waitingForCustomerSelection") &&
+                "Seleccione un cliente"}
+              {state.matches("addingOrderItems") &&
+                "Añada productos a la orden"}
+            </Typography>
+            {state.matches("addingOrderItems") &&
+              (addOrderLineFormMethods.watch("product") as number) > 0 && (
+                <Typography className={classes.stock}>
+                  (Hay {currentStock} en stock)
+                </Typography>
+              )}
+          </div>
+
           {state.matches("waitingForCustomerSelection") && (
             <Select
               className={classes.select}
@@ -178,18 +278,20 @@ export default function Invoice() {
               options={prepareCustomers(customersQuery.data) || []}
             />
           )}
+
           <FormProvider {...addOrderLineFormMethods}>
             {state.matches("addingOrderItems") && (
-              <>
+              <React.Fragment>
                 <AddOrderLineForm
                   options={prepareProducts(productsQuery.data) || []}
                 />
                 <SubmitButton formSubmit={handleAddOrderLine} />
-              </>
+              </React.Fragment>
             )}
           </FormProvider>
         </Box>
       </Paper>
+
       {state.matches("waitingForCustomerSelection") && (
         <Button
           color="primary"
@@ -209,6 +311,7 @@ export default function Invoice() {
           <InvoiceTable invoiceData={state.context.lineItems} />
         </div>
       )}
+
       {state.matches("addingOrderItems") && (
         <Button
           color="primary"
