@@ -6,7 +6,7 @@ export interface ISalesOrder {
   createdOn?: Date;
   updatedOn?: Date;
   customer: ICustomer;
-  salesOrderItems: ISalesOrderItem;
+  salesOrderItems: ISalesOrderItem[];
   isPaid: boolean;
 }
 

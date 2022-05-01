@@ -9,7 +9,7 @@ type TContext = {
 
 type TEvent =
   | { type: "SELECT_CUSTOMER"; customerId: number }
-  | { type: "ADD_ORDER_ITEM"; orderItem: ISalesOrderItem }
+  | { type: "ADD_ORDER_ITEM"; orderItem: ISalesOrderItem; currentStock: number }
   | { type: "CHANGE_CUSTOMER" }
   | { type: "GO_TO_PRODUCT_SELECTION" }
   | { type: "SUBMIT_INVOICE" }
@@ -40,12 +40,24 @@ const generateInvoiceMachine = createMachine(
       },
       addingOrderItems: {
         on: {
-          ADD_ORDER_ITEM: {
-            actions: "addOrderItem",
-          },
+          ADD_ORDER_ITEM: [
+            {
+              actions: "addOrderItem",
+              cond: "stockIsAvailable",
+              target: "addingOrderItems",
+            },
+            {
+              target: ".outOfStockError",
+            },
+          ],
           SUBMIT_INVOICE: {
             target: "generatingInvoice",
           },
+        },
+        initial: "noError",
+        states: {
+          noError: {},
+          outOfStockError: {},
         },
       },
       generatingInvoice: {
@@ -76,6 +88,10 @@ const generateInvoiceMachine = createMachine(
         });
         return (ctx.lineItems = newLineItems);
       },
+    },
+    guards: {
+      stockIsAvailable: (_, event) =>
+        event.orderItem.quantity <= event.currentStock,
     },
   }
 );

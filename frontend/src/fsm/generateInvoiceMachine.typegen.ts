@@ -17,12 +17,17 @@ export interface Typegen0 {
     delays: never;
   };
   eventsCausingServices: {};
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    stockIsAvailable: "ADD_ORDER_ITEM";
+  };
   eventsCausingDelays: {};
   matchesStates:
     | "waitingForCustomerSelection"
     | "addingOrderItems"
+    | "addingOrderItems.noError"
+    | "addingOrderItems.outOfStockError"
     | "generatingInvoice"
-    | "invoiceGenerationDone";
+    | "invoiceGenerationDone"
+    | { addingOrderItems?: "noError" | "outOfStockError" };
   tags: never;
 }

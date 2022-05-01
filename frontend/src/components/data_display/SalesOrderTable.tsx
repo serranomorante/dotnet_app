@@ -6,7 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { ISalesOrder } from "../../@types/ISalesOrder";
+import { ISalesOrder, ISalesOrderItem } from "../../@types/ISalesOrder";
 
 const useStyles = makeStyles({
   table: {
@@ -44,23 +44,40 @@ export default function SalesOrderTable(props: SalesOrderTableProps) {
   const { salesOrderData } = props;
   const classes = useStyles();
 
+  function getTotal(salesOrderItems: ISalesOrderItem[]): number {
+    if (typeof salesOrderItems === "undefined") return 0;
+    return salesOrderItems.reduce(
+      (result, salesItem) =>
+        salesItem.product.price * salesItem.quantity + result,
+      0
+    );
+  }
+
   return (
     <TableContainer component={Paper}>
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <StyledTableCell>Id de la orden</StyledTableCell>
             <StyledTableCell>Cliente</StyledTableCell>
-            <StyledTableCell align="right">Pagado</StyledTableCell>
+            <StyledTableCell>Total</StyledTableCell>
+            <StyledTableCell>Pagado</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {salesOrderData.map((salesOrder) => (
             <StyledTableRow key={salesOrder.id}>
               <StyledTableCell component="th" scope="row">
+                {salesOrder.id}
+              </StyledTableCell>
+              <StyledTableCell>
                 {`${salesOrder.customer.firstName} ${salesOrder.customer.lastName}`}
               </StyledTableCell>
-              <StyledTableCell align="right">
-                {salesOrder.isPaid}
+              <StyledTableCell>
+                {getTotal(salesOrder.salesOrderItems)}
+              </StyledTableCell>
+              <StyledTableCell>
+                {salesOrder.isPaid ? "Sí" : "No"}
               </StyledTableCell>
             </StyledTableRow>
           ))}
