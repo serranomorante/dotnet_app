@@ -24,7 +24,7 @@ ARG APP_HOME=/app/backend
 
 WORKDIR ${APP_HOME}
 
-COPY ./compose/production/dotnet/entrypoint /entrypoint
+COPY ./compose/local/dotnet/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
