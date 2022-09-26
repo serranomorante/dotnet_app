@@ -54,7 +54,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Guayaquil
-      - URL=serranomorante.com
+      - URL=serranomorantepatricio.info
       - SUBDOMAINS=dotnet,dotnet-api
       - VALIDATION=http
       - EMAIL=serranomorantepatricio@gmail.com
