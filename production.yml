@@ -10,7 +10,7 @@ services:
     volumes:
       - production_postgres_data:/var/lib/postgresql/data:Z
     expose:
-      - "5432"
+      - 5432
     env_file:
       - ./.envs/.production/.postgres
 
