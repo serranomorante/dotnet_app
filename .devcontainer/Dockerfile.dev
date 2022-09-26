@@ -23,14 +23,9 @@ RUN dotnet ef --version
 # From here: https://spin.atomicobject.com/2021/06/16/docker-development-container/
 WORKDIR /workspace
 
-<<<<<<< HEAD
 COPY .devcontainer/docker-entrypoint.sh /
 RUN sed -i 's/\r$//g' /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD [ "sleep", "infinity" ]
-=======
-RUN sed -i 's/\r$//g' .devcontainer/start
-RUN chmod +x .devcontainer/start
->>>>>>> f56ec13726dc963427554f0ca59a00340288a3db

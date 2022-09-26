@@ -5,10 +5,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: heh_shop_production_postgres
-    container_name: heh_shop_local_postgres
+    image: dotnet_app_production_postgres
+    container_name: dotnet_app_local_postgres
     volumes:
-      - heh_shop_local_postgres_data:/var/lib/postgresql/data:Z
+      - dotnet_app_local_postgres_data:/var/lib/postgresql/data:Z
     networks:
       - dotnet_app_network
     expose:
@@ -20,10 +20,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/dotnet/Dockerfile
-    image: heh_shop_local_api
-    container_name: heh_shop_local_api
+    image: dotnet_app_local_api
+    container_name: dotnet_app_local_api
     volumes:
-      - heh-shop-app:/app
+      - .:/app
     networks:
       - dotnet_app_network
     depends_on:
@@ -40,11 +40,11 @@ services:
       context: .
       dockerfile: ./compose/local/frontend/Dockerfile
       args:
-        - API_URL=http://localhost:8080/api
-    image: heh_shop_local_nginx
-    container_name: heh_shop_local_nginx
+        - API_URL=http://192.168.237.128/api
+    image: dotnet_app_local_nginx
+    container_name: dotnet_app_local_nginx
     volumes:
-      - heh-shop-app:/app
+      - .:/app
     networks:
       - dotnet_app_network
     depends_on:
@@ -55,11 +55,8 @@ services:
 
 
 volumes:
-  heh-shop-api:
-  heh-shop-app:
-    external: true
-  heh_shop_local_sqlserver_data: {}
-  heh_shop_local_postgres_data: {}
+  dotnet_app_local_sqlserver_data: {}
+  dotnet_app_local_postgres_data: {}
 
 networks:
   dotnet_app_network:
