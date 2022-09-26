@@ -1,5 +1,6 @@
 {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
-    "vssolution.altSolutionFolders": ["backend"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
+  // "dotnet-test-explorer.testArguments": "--startup-project ../ShopAPI",
+  "vssolution.altSolutionFolders": ["backend"]
 }
