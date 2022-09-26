@@ -5,12 +5,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: heh_shop_production_postgres
-    container_name: heh_shop_postgres
+    image: dotnet_app_production_postgres
+    container_name: dotnet_app_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data:Z
-    networks:
-      - heh-shop-network
     expose:
       - "5432"
     env_file:
@@ -20,16 +18,12 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/dotnet/Dockerfile
-    image: heh_shop_production_api
-    container_name: heh_shop_api
-    volumes:
-      - heh-shop-app:/app
-    networks:
-      - heh-shop-network
+    image: dotnet_app_production_api
+    container_name: dotnet_app_api
     depends_on:
       - postgres
-    ports:
-      - "8080:8080"
+    expose:
+      - 8080
     env_file:
       - ./.envs/.production/.dotnet
       - ./.envs/.production/.postgres
@@ -41,25 +35,37 @@ services:
       dockerfile: ./compose/production/frontend/Dockerfile
       args:
         - API_URL=https://heh-api.serranomorante.com/api
-    image: heh_shop_production_nginx
-    container_name: heh_shop_nginx
-    volumes:
-      - heh-shop-app:/app
-    networks:
-      - heh-shop-network
+    image: dotnet_app_production_nginx
+    container_name: dotnet_app_nginx
     depends_on:
       - api
-    ports:
-      - "1234:1234"
+    expose:
+      - 1234
     command: /start
+
+  swag:
+    # Swag
+    # ---------------
+    image: ghcr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Guayaquil
+      - URL=serranomorante.com
+      - SUBDOMAINS=dotnet,dotnet-api
+      - VALIDATION=http
+      - EMAIL=serranomorantepatricio@gmail.com
+      - STAGING=false
+    volumes:
+      - ./config:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
 
 
 volumes:
-  heh-shop-api:
-  heh-shop-app:
-    external: true
   production_postgres_data: {}
-
-networks:
-  heh-shop-network:
-    external: true

@@ -410,3 +410,5 @@ tags
 .env
 .envs/*
 !.envs/.local/
+config/*
+!config/.keep
