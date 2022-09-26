@@ -34,7 +34,7 @@ services:
       context: .
       dockerfile: ./compose/production/frontend/Dockerfile
       args:
-        - API_URL=https://heh-api.serranomorante.com/api
+        - API_URL=https://dotnet-api.serranomorantepatricio.info/api
     image: dotnet_app_production_nginx
     container_name: dotnet_app_nginx
     depends_on:
