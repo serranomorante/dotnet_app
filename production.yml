@@ -58,7 +58,7 @@ services:
       - SUBDOMAINS=www,dotnet,dotnet-api
       - VALIDATION=http
       - EMAIL=serranomorantepatricio@gmail.com
-      - STAGING=True
+      - STAGING=False
     volumes:
       - ./config:/config
     ports:
