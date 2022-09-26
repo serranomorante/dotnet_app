@@ -1,7 +1,7 @@
 # Project Variables
 PROJECT_NAME ?= ShopAPI
 ORG_NAME ?= ShopAPI
-REPO_NAME ?= heh_shop
+REPO_NAME ?= dotnet_app
 
 .PHONY: migrations db dcup dcbuild
 

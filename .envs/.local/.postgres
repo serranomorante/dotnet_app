@@ -2,11 +2,11 @@
 # ------------------------------------------------------------------------------
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
-POSTGRES_DB=heh_shop
+POSTGRES_DB=dotnet_app
 POSTGRES_USER=pEWcKPHqmspWwWsxrqURDYUCalJmMwVb
 POSTGRES_PASSWORD=V9qveVS06aSyhEmzV8ZmgQBd53c37F48n3loJBGBTCJOU7sefwS6EMWzdL6KE8Ks
 
 
 # PostgreSQL (Test DB)
 # ------------------------------------------------------------------------------
-POSTGRES_TEST_DB=test_heh_shop_db
+POSTGRES_TEST_DB=test_dotnet_app_db

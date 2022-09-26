@@ -1,1 +1,1 @@
-ALLOWED_ORIGINS=http://localhost:1234
+ALLOWED_ORIGINS=http://localhost:1234,http://192.168.237.128:1234

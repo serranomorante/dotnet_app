@@ -37,14 +37,13 @@ Una vez instalados Docker y Docker Compose, procedemos con los pasos para inicia
 
 Clonamos el actual repositorio e ingresamos a la carpeta del proyecto
 ```sh
-git clone https://github.com/serranomorante/heh_shop
-cd heh_shop
+git clone https://github.com/serranomorante/dotnet_app
+cd dotnet_app
 ```
 
 Una vez dentro de la carpeta del proyecto, ejecutamos en el siguiente orden:
 ```sh
-docker network create heh-shop-network
-docker volume create --name=heh-shop-app
+docker network create dotnet_app_network
 docker-compose up --build
 ```
 Esperamos hasta ver la siguiente pantalla o similar:
