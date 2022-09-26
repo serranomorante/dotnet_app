@@ -6,17 +6,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { IProductInventory } from "../../@types/IProduct";
+import { ISalesOrderItem } from "../../@types/ISalesOrder";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
-
-interface InventoryTableProps {
-  inventoryData: IProductInventory[];
-}
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,12 +32,16 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
+interface InvoiceTableProps {
+  invoiceData: ISalesOrderItem[];
+}
+
 /**
- * Table for inventory data
+ * Table for invoice data
  * @returns
  */
-export default function InventoryTable(props: InventoryTableProps) {
-  const { inventoryData } = props;
+export default function InvoiceTable(props: InvoiceTableProps) {
+  const { invoiceData } = props;
   const classes = useStyles();
 
   return (
@@ -49,30 +49,22 @@ export default function InventoryTable(props: InventoryTableProps) {
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="right">Cantidad real</StyledTableCell>
-            <StyledTableCell align="right">Cantidad ideal</StyledTableCell>
-            <StyledTableCell align="right">Precio Unitario</StyledTableCell>
-            <StyledTableCell align="right">Impuestos</StyledTableCell>
+            <StyledTableCell>Producto</StyledTableCell>
+            <StyledTableCell align="right">Cantidad</StyledTableCell>
+            <StyledTableCell align="right">Valor Unit.</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {inventoryData.map((inventory) => (
-            <StyledTableRow key={inventory.id}>
+          {invoiceData.map((invoice) => (
+            <StyledTableRow key={invoice.product.id}>
               <StyledTableCell component="th" scope="row">
-                {inventory.product.name}
+                {invoice.product.name}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {inventory.quantityOnHand}
+                {invoice.quantity}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {inventory.idealQuantity}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                $ {inventory.product.price}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {inventory.product.isTaxable ? "Sí" : "No"}
+                {invoice.product.price}
               </StyledTableCell>
             </StyledTableRow>
           ))}

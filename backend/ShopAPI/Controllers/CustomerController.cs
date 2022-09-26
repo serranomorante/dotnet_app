@@ -42,7 +42,7 @@ public class CustomerController : ControllerBase {
     }
 
     [HttpDelete("/api/customer/{id}")]
-    public ActionResult CreateCustomer(int id) {
+    public ActionResult DeleteCustomer(int id) {
         _logger.LogInformation("Deleting a customer");
         var response = _customerService.DeleteCustomer(id);
         return Ok(response);

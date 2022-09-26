@@ -1,36 +1,41 @@
 import axios from "axios";
 import { ServiceResponse } from "../@types/common";
-import { IProduct } from "../@types/IProduct";
+import { ICustomer } from "../@types/ICustomer";
 import axiosInstance from "../utils/axios";
 
-export class ProductService {
-  public async getProducts(): Promise<IProduct[]> {
+/**
+ * Customer Service
+ */
+export class CustomerService {
+  public async getCustomers(): Promise<ICustomer[]> {
     try {
-      const url = "/product";
-      const response = await axiosInstance.get<IProduct[]>(url);
+      const url = "/customer";
+      const response = await axiosInstance.get<ICustomer[]>(url);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return error.response?.data;
       }
+
       throw error;
     }
   }
 
-  public async createProduct(
-    product: IProduct
-  ): Promise<ServiceResponse<IProduct>> {
+  public async createCustomer(
+    customer: ICustomer
+  ): Promise<ServiceResponse<ICustomer>> {
     try {
-      const url = "/product";
-      const response = await axiosInstance.post<ServiceResponse<IProduct>>(
+      const url = "/customer";
+      const response = await axiosInstance.post<ServiceResponse<ICustomer>>(
         url,
-        product
+        customer
       );
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return error.response?.data;
       }
+
       throw error;
     }
   }

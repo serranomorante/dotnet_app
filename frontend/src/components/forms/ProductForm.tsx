@@ -1,20 +1,14 @@
-import * as Yup from "yup";
-import { FormikProps, withFormik, Form } from "formik";
-import { IProduct } from "../../@types/IProduct";
+import * as z from "zod";
+import { Controller, useFormContext } from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { makeStyles } from "@material-ui/core/styles";
 
-const Schema = Yup.object({
-  name: Yup.string().max(255).required("Este campo es requerido"),
-});
-
-const useStyles = makeStyles({
-  submitButton: {
-    marginTop: 20,
-  },
-});
-
-export interface FormValues {
+export interface IProductFormInputs {
   name: string;
   description: string;
   price: number;
@@ -22,48 +16,143 @@ export interface FormValues {
   isArchived: boolean;
 }
 
-interface OtherProps {}
+const useStyles = makeStyles({
+  field: {
+    marginBottom: 10,
+  },
+});
 
-function InnerForm(props: OtherProps & FormikProps<FormValues>) {
-  const { values, handleChange, handleBlur } = props;
+export const productFormSchema = z.object({
+  name: z
+    .string()
+    .max(255, { message: "Has alcanzado el máximo permitido" })
+    .min(3, { message: "Por favor ingrese un valor mayor a 3 dígitos" }),
+  description: z
+    .string()
+    .max(500, { message: "Has alcanzado el máximo permitido" })
+    .min(3, "Por favor ingrese un valor mayor a 3 dígitos"),
+  price: z
+    .string()
+    .refine(
+      (val) => !Number.isNaN(parseInt(val, 10)) && parseInt(val, 10) > 0,
+      {
+        message: "Por favor, ingrese un valor válido",
+      }
+    ),
+  isTaxable: z.boolean().optional(),
+  isArchived: z.boolean().optional(),
+});
 
+/**
+ * Product form component
+ * @returns
+ */
+export default function ProductForm() {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<IProductFormInputs>();
   const classes = useStyles();
 
   return (
-    <div>
-      <Form>
-        <TextField
-          name="name"
-          label="Nombre"
-          value={values.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          fullWidth
+    <form>
+      <Controller
+        name="name"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Nombre"
+            className={classes.field}
+            error={Boolean(errors.name)}
+            helperText={errors.name ? errors.name?.message : ""}
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="description"
+        control={control}
+        defaultValue=""
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Descripción"
+            className={classes.field}
+            error={Boolean(errors.description)}
+            multiline
+            helperText={errors.description ? errors.description?.message : ""}
+            minRows={2}
+            fullWidth
+          />
+        )}
+      />
+      <Controller
+        name="price"
+        control={control}
+        defaultValue={0}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Precio"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">$</InputAdornment>
+              ),
+            }}
+            className={classes.field}
+            error={Boolean(errors.price)}
+            helperText={errors.price ? errors.price?.message : ""}
+            type="number"
+            fullWidth
+          />
+        )}
+      />
+      <FormControl error={Boolean(errors.isTaxable)}>
+        <Controller
+          name="isTaxable"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  {...field}
+                  checked={field.value}
+                  className={classes.field}
+                />
+              }
+              label="Aplicar Impuestos"
+            />
+          )}
         />
-        {/* <Button
-          className={classes.submitButton}
-          variant="contained"
-          type="submit"
-          color="primary"
-          disableElevation
-          fullWidth
-        >
-          Iniciar sesión
-        </Button> */}
-      </Form>
-    </div>
+        {errors.isTaxable && (
+          <FormHelperText>{errors.isTaxable?.message}</FormHelperText>
+        )}
+      </FormControl>
+      <FormControl error={Boolean(errors.isArchived)}>
+        <Controller
+          name="isArchived"
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  {...field}
+                  checked={field.value}
+                  className={classes.field}
+                />
+              }
+              label="Archivado"
+            />
+          )}
+        />
+        {errors.isArchived && (
+          <FormHelperText>{errors.isArchived?.message}</FormHelperText>
+        )}
+      </FormControl>
+    </form>
   );
 }
-
-interface ProductFormProps {
-  handleSubmit: (values: FormValues) => void;
-}
-
-const ProductForm = withFormik<ProductFormProps, FormValues>({
-  validationSchema: Schema,
-  handleSubmit: async (values, { props }) => {
-    props.handleSubmit(values);
-  },
-})(InnerForm);
-
-export default ProductForm;

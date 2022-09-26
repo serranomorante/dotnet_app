@@ -6,17 +6,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { IProductInventory } from "../../@types/IProduct";
+import { ICustomer } from "../../@types/ICustomer";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
-
-interface InventoryTableProps {
-  inventoryData: IProductInventory[];
-}
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -36,12 +32,16 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
+interface CustomersTableProps {
+  customersData: ICustomer[];
+}
+
 /**
  * Table for inventory data
  * @returns
  */
-export default function InventoryTable(props: InventoryTableProps) {
-  const { inventoryData } = props;
+export default function CustomersTable(props: CustomersTableProps) {
+  const { customersData } = props;
   const classes = useStyles();
 
   return (
@@ -49,30 +49,34 @@ export default function InventoryTable(props: InventoryTableProps) {
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="right">Cantidad real</StyledTableCell>
-            <StyledTableCell align="right">Cantidad ideal</StyledTableCell>
-            <StyledTableCell align="right">Precio Unitario</StyledTableCell>
-            <StyledTableCell align="right">Impuestos</StyledTableCell>
+            <StyledTableCell>First name</StyledTableCell>
+            <StyledTableCell align="right">Last Name</StyledTableCell>
+            <StyledTableCell align="right">Dirección 1</StyledTableCell>
+            <StyledTableCell align="right">Dirección 2</StyledTableCell>
+            <StyledTableCell align="right">Ciudad</StyledTableCell>
+            <StyledTableCell align="right">País</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {inventoryData.map((inventory) => (
-            <StyledTableRow key={inventory.id}>
+          {customersData.map((customer) => (
+            <StyledTableRow key={customer.id}>
               <StyledTableCell component="th" scope="row">
-                {inventory.product.name}
+                {customer.firstName}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {inventory.quantityOnHand}
+                {customer.lastName}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {inventory.idealQuantity}
+                {customer.primaryAddress.addressLine1}
               </StyledTableCell>
               <StyledTableCell align="right">
-                $ {inventory.product.price}
+                {customer.primaryAddress.addressLine2}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {inventory.product.isTaxable ? "Sí" : "No"}
+                {customer.primaryAddress.city}
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                {customer.primaryAddress.country}
               </StyledTableCell>
             </StyledTableRow>
           ))}

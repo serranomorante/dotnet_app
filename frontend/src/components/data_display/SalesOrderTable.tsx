@@ -6,7 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { IProductInventory } from "../../@types/IProduct";
+import { ISalesOrder, ISalesOrderItem } from "../../@types/ISalesOrder";
 
 const useStyles = makeStyles({
   table: {
@@ -14,8 +14,8 @@ const useStyles = makeStyles({
   },
 });
 
-interface InventoryTableProps {
-  inventoryData: IProductInventory[];
+interface SalesOrderTableProps {
+  salesOrderData: ISalesOrder[];
 }
 
 const StyledTableCell = withStyles((theme) => ({
@@ -37,42 +37,47 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 /**
- * Table for inventory data
+ * Table for sales order data
  * @returns
  */
-export default function InventoryTable(props: InventoryTableProps) {
-  const { inventoryData } = props;
+export default function SalesOrderTable(props: SalesOrderTableProps) {
+  const { salesOrderData } = props;
   const classes = useStyles();
+
+  function getTotal(salesOrderItems: ISalesOrderItem[]): number {
+    if (typeof salesOrderItems === "undefined") return 0;
+    return salesOrderItems.reduce(
+      (result, salesItem) =>
+        salesItem.product.price * salesItem.quantity + result,
+      0
+    );
+  }
 
   return (
     <TableContainer component={Paper}>
       <BasicTable className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="right">Cantidad real</StyledTableCell>
-            <StyledTableCell align="right">Cantidad ideal</StyledTableCell>
-            <StyledTableCell align="right">Precio Unitario</StyledTableCell>
-            <StyledTableCell align="right">Impuestos</StyledTableCell>
+            <StyledTableCell>Id de la orden</StyledTableCell>
+            <StyledTableCell>Cliente</StyledTableCell>
+            <StyledTableCell>Total</StyledTableCell>
+            <StyledTableCell>Pagado</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {inventoryData.map((inventory) => (
-            <StyledTableRow key={inventory.id}>
+          {salesOrderData.map((salesOrder) => (
+            <StyledTableRow key={salesOrder.id}>
               <StyledTableCell component="th" scope="row">
-                {inventory.product.name}
+                {salesOrder.id}
               </StyledTableCell>
-              <StyledTableCell align="right">
-                {inventory.quantityOnHand}
+              <StyledTableCell>
+                {`${salesOrder.customer.firstName} ${salesOrder.customer.lastName}`}
               </StyledTableCell>
-              <StyledTableCell align="right">
-                {inventory.idealQuantity}
+              <StyledTableCell>
+                {getTotal(salesOrder.salesOrderItems)}
               </StyledTableCell>
-              <StyledTableCell align="right">
-                $ {inventory.product.price}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {inventory.product.isTaxable ? "Sí" : "No"}
+              <StyledTableCell>
+                {salesOrder.isPaid ? "Sí" : "No"}
               </StyledTableCell>
             </StyledTableRow>
           ))}

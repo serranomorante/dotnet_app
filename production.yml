@@ -6,47 +6,47 @@ services:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: heh_shop_production_postgres
-    container_name: heh_shop_local_postgres
+    container_name: heh_shop_postgres
     volumes:
-      - heh_shop_local_postgres_data:/var/lib/postgresql/data:Z
+      - production_postgres_data:/var/lib/postgresql/data:Z
     networks:
-      - dotnet_app_network
+      - heh-shop-network
     expose:
       - "5432"
     env_file:
-      - ./.envs/.local/.postgres
+      - ./.envs/.production/.postgres
 
   api:
     build:
       context: .
-      dockerfile: ./compose/local/dotnet/Dockerfile
-    image: heh_shop_local_api
-    container_name: heh_shop_local_api
+      dockerfile: ./compose/production/dotnet/Dockerfile
+    image: heh_shop_production_api
+    container_name: heh_shop_api
     volumes:
       - heh-shop-app:/app
     networks:
-      - dotnet_app_network
+      - heh-shop-network
     depends_on:
       - postgres
     ports:
       - "8080:8080"
     env_file:
-      - ./.envs/.local/.dotnet
-      - ./.envs/.local/.postgres
+      - ./.envs/.production/.dotnet
+      - ./.envs/.production/.postgres
     command: /start
 
   nginx:
     build:
       context: .
-      dockerfile: ./compose/local/frontend/Dockerfile
+      dockerfile: ./compose/production/frontend/Dockerfile
       args:
-        - API_URL=http://localhost:8080/api
-    image: heh_shop_local_nginx
-    container_name: heh_shop_local_nginx
+        - API_URL=https://heh-api.serranomorante.com/api
+    image: heh_shop_production_nginx
+    container_name: heh_shop_nginx
     volumes:
       - heh-shop-app:/app
     networks:
-      - dotnet_app_network
+      - heh-shop-network
     depends_on:
       - api
     ports:
@@ -58,9 +58,8 @@ volumes:
   heh-shop-api:
   heh-shop-app:
     external: true
-  heh_shop_local_sqlserver_data: {}
-  heh_shop_local_postgres_data: {}
+  production_postgres_data: {}
 
 networks:
-  dotnet_app_network:
+  heh-shop-network:
     external: true

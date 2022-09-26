@@ -4,7 +4,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { indigo } from "@material-ui/core/colors";
-import MiniDrawer from "./navigation/Drawer";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import InventoryPage from "../pages/InventoryPage";
+import CustomerPage from "../pages/CustomerPage";
+import OrderPage from "../pages/OrderPage";
+import InvoicePage from "../pages/InvoicePage";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +25,15 @@ export default function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <MiniDrawer />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<InventoryPage />} />
+              <Route path="/inventory" element={<InventoryPage />} />
+              <Route path="/customer" element={<CustomerPage />} />
+              <Route path="/invoice" element={<InvoicePage />} />
+              <Route path="/orders" element={<OrderPage />} />
+            </Routes>
+          </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ThemeProvider>

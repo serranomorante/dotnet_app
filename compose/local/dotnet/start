@@ -4,7 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-
+cd ShopAPI.Data && dotnet ef --startup-project ../ShopAPI database update
+cd ..
 cd ShopAPI
 dotnet dev-certs https
-dotnet run --urls=http://0.0.0.0:80
+dotnet run --urls=http://0.0.0.0:8080

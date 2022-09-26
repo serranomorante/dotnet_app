@@ -28,11 +28,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+// each allowed origin as comma separated strings
+var allowedOriginsFromEnv = Environment.GetEnvironmentVariable("ALLOWED_ORIGINS") ?? "";
+
 app.UseCors(
     builder => builder
-    .WithOrigins(
-        "http://192.168.237.128:1234"
-    )
+    .WithOrigins(allowedOriginsFromEnv.Split(","))
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()

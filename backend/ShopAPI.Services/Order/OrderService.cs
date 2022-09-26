@@ -39,6 +39,15 @@ public class OrderService : IOrderService {
         _logger.LogInformation("Generating new order");
 
         foreach(var item in order.SalesOrderItems) {
+            if (item.Quantity > _inventoryService.GetByProductId(item.Product.Id).QuantityOnHand) {
+                return new ServiceResponse<bool> {
+                    IsSuccess = false,
+                    Data = false,
+                    Message = "Not enough stock",
+                    Time = now
+                };
+            }
+
             item.Product = _productService
                 .GetProductById(item.Product.Id);
             var inventoryId = _inventoryService
