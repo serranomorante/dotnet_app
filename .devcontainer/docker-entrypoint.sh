@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -o errexit
 set -o pipefail
@@ -14,3 +14,5 @@ export ConnectionStrings__DefaultConnection="Host=${POSTGRES_HOST};Database=${PO
 # Install csharp and parcel dependencies
 dotnet restore ./backend
 cd ./frontend && yarn install
+
+exec "$@"
