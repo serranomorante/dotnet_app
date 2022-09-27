@@ -131,7 +131,7 @@ export default function Layout(props: React.PropsWithChildren<{}>) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            HEH GESTIÓN DE PEDIDOS
+            APP PARA GESTIÓN DE PEDIDOS
           </Typography>
         </Toolbar>
       </AppBar>

@@ -1,10 +1,10 @@
 > Ejercicio de programación 👨‍🔬
 
-# HEH Shop
+# C# + Typescript app
 
 ## Gestión de inventarios
 
-HEH Shop es una aplicación web para la gestión de inventarios creada en .NET (con Postgres) en el backend y React.js (con Typescript) en el frontend.
+Esta es una aplicación web para la gestión de inventarios creada en .NET (con C#) en el backend y React.js (con Typescript) en el frontend. La base de datos es Postgres. Todos en sus últimas versiones.
 
 ## Características
 
@@ -12,6 +12,15 @@ HEH Shop es una aplicación web para la gestión de inventarios creada en .NET (
 - Añade clientes con información como: Nombres, apellidos, dirección, ciudad, etc. ⚡
 - Genera órderes con información del cliente, producto y cantidad ⚡
 - Visualiza los pedidos generados ⚡
+
+## Características del proyecto
+
+- Utiliza docker para facilitar el desarrollo y despliegue en producción
+- Utiliza .devcontainer para un ambiente de desarrollo replicable en pocos segundos
+- Es un monorepo, el frontend y el backend tienen una clara separación
+- Sigue los principios SOLID y utiliza patrones de diseño
+
+## [DEMO](https://dotnet.serranomorantepatricio.info)
 
 ## Pasos para iniciar la aplicación
 
@@ -32,13 +41,13 @@ docker-compose --version
 
 Estos comandos retornan las respectivas versiones de Docker y de Docker Compose.
 
-> ⚠ Si usted desea, puede ejecutar el siguiente comando para asegurarse que ningún contenedor docker esté en ejecución y pueda interferir con el inicio de nuestro aplicativo.
+> ⚠ Si usted desea, puede ejecutar el siguiente comando para asegurarse que ningún contenedor docker esté en ejecución ya que podría interferir con el arranque de nuestro aplicativo.
 
 ```sh
 docker stop $(docker ps -q -a)
 ```
 
-Una vez instalados Docker y Docker Compose, procedemos con los pasos para iniciar nuestra aplicación
+Una vez instalados Docker y Docker Compose, procedemos con los pasos para iniciar nuestra aplicación.
 
 #### Importate, ejecutar los siguientes comandos con `Powershell (windows)`, `bash (linux)` o bien `zsh (mac)`
 
@@ -62,8 +71,6 @@ Esperamos hasta ver la siguiente pantalla o similar:
 Sin cerrar la consola de comando, nos dirigimos a nuestro navegador de preferencia y buscamos la siguiente url:
 [localhost:1234](http://localhost:1234)
 Y desde ahí podemos comenzar a navegar por el aplicativo.
-
-## [DEMO](https://dotnet.serranomorantepatricio.info)
 
 ## Otros detalles
 
